@@ -16,10 +16,15 @@ initials = {
 # Read all the paretos from all the subdirs
 datasets = get_datasets(DATA_DIR)
 
-# Print all the configurations we were able to read
+# Gather all the configurations we were able to read
 configs = pd.DataFrame([d.to_series() for d in datasets])
 configs = configs[[c for c in configs.columns if c != 'time']]\
         .drop_duplicates()
+
+# Keep only the configurations with 0.95 probpas
+configs = configs[configs['prob'] == '0.95']
+
+# Print the configurations
 print(configs.shape[0], 'configurations:')
 print(configs.to_markdown())
 print()
