@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<!-- lqns -pragma= cycles=yes -->
+<lqn-model name="/tmp/easier-tmp/3/385/output" description="lqns 5.17 solution for model from: /tmp/easier-tmp/3/385/output.xml." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/usr/local/share/lqns/lqn.xsd">
+   <solver-params comment="0" conv_val="1e-05" it_limit="50" underrelax_coeff="0.9" print_int="10">
+      <pragma param="cycles" value="yes"/>
+      <result-general solver-info="lqns 5.17" valid="NO" conv-val="0.015578" iterations="50" platform-info="shelby Linux 5.11.0-49-generic" user-cpu-time=" 0:00:00.179" system-cpu-time=" 0:00:00.000" elapsed-time=" 0:00:00.180">
+         <mva-info submodels="4" core="200" step="5653" step-squared="211391" wait="1.86182e+07" wait-squared="5.17848e+12" faults="0"/>
+      </result-general>
+   </solver-params>
+   <processor name="BarCodeScanner" scheduling="fcfs">
+      <result-processor utilization="0.263549"/>
+      <task name="ScannerController" scheduling="fcfs">
+         <result-task throughput="0.154879" utilization="0.842826" phase1-utilization="0.842826" proc-utilization="0.154879"/>
+         <entry name="scannerBes0" type="PH1PH2">
+            <result-entry utilization="0.243012" throughput="0.0461539" squared-coeff-variation="2.09975" proc-utilization="0.0461539" throughput-bound="0.2"/>
+            <entry-phase-activities>
+               <activity name="productBarCodeMessage" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.0961723" service-time="5.26526" utilization="0.243012" service-time-variance="58.2113"/>
+                  <synch-call dest="cashDeskBes1" calls-mean="1">
+                     <result-call waiting="0.0562258"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="guiStoreBes" type="PH1PH2">
+            <result-entry utilization="0.599813" throughput="0.108725" squared-coeff-variation="2.08276" proc-utilization="0.108725" throughput-bound="0.2"/>
+            <entry-phase-activities>
+               <activity name="rollinReceivedOrderMessage" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.0961723" service-time="5.51678" utilization="0.599813" service-time-variance="63.3883"/>
+                  <synch-call dest="appStoreBes" calls-mean="1">
+                     <result-call waiting="0.0574328"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+      <task name="StockManager" scheduling="ref">
+         <result-task throughput="0.10867" utilization="0.999944" phase1-utilization="0.999944" proc-utilization="0.10867"/>
+         <entry name="stockManagerBes" type="PH1PH2">
+            <result-entry utilization="0.999944" throughput="0.10867" squared-coeff-variation="2.58927" proc-utilization="0.10867" throughput-bound="0.166667"/>
+            <entry-phase-activities>
+               <activity name="enterOrderIDMessage" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.148558" service-time="9.20167" utilization="0.999944" service-time-variance="219.236"/>
+                  <synch-call dest="guiStoreBes" calls-mean="1">
+                     <result-call waiting="2.53733"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+   <processor name="StoreServer" scheduling="fcfs">
+      <result-processor utilization="0.160264"/>
+      <task name="Inventory" scheduling="fcfs">
+         <result-task throughput="0.0477113" utilization="0.0488745" phase1-utilization="0.0488745" proc-utilization="0.0477113"/>
+         <entry name="inventoryBes0" type="PH1PH2">
+            <result-entry utilization="0.0488745" throughput="0.0477113" squared-coeff-variation="0.953536" proc-utilization="0.0477113" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="getProductWithStockItem" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.0243944" service-time="1.02438" utilization="0.0488745" service-time-variance="1.0006"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+      <task name="AppStore" scheduling="fcfs">
+         <result-task throughput="0.112553" utilization="0.487574" phase1-utilization="0.487574" proc-utilization="0.112553"/>
+         <entry name="appStoreBes" type="PH1PH2">
+            <result-entry utilization="0.487574" throughput="0.112553" squared-coeff-variation="0.752607" proc-utilization="0.112553" throughput-bound="0.25"/>
+            <entry-phase-activities>
+               <activity name="queryStockItem" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.185892" service-time="4.33195" utilization="0.487574" service-time-variance="14.1232"/>
+                  <synch-call dest="persistenceBes" calls-mean="1">
+                     <result-call waiting="0.13564"/>
+                  </synch-call>
+                  <synch-call dest="dataStoreBes0" calls-mean="1">
+                     <result-call waiting="0.00181492"/>
+                  </synch-call>
+                  <synch-call dest="dataStoreBes1" calls-mean="1">
+                     <result-call waiting="0.00181492"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+   <processor name="EnterpriseServer" scheduling="fcfs">
+      <result-processor utilization="0.627535"/>
+      <task name="Reporting" scheduling="fcfs">
+         <result-task throughput="0.13356" utilization="0.731574" phase1-utilization="0.731574" proc-utilization="0.13356"/>
+         <entry name="appReportingBes" type="PH1PH2">
+            <result-entry utilization="0.731574" throughput="0.13356" squared-coeff-variation="0.675035" proc-utilization="0.13356" throughput-bound="0.25"/>
+            <entry-phase-activities>
+               <activity name="getmttd_message" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.907146" service-time="5.4775" utilization="0.731574" service-time-variance="20.2531"/>
+                  <synch-call dest="PersistenceBesSSR" calls-mean="1">
+                     <result-call waiting="0.115207"/>
+                  </synch-call>
+                  <synch-call dest="getEnterprise_bes0" calls-mean="1">
+                     <result-call waiting="0"/>
+                  </synch-call>
+                  <synch-call dest="getEnterprise_bes1" calls-mean="1">
+                     <result-call waiting="0"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+      <task name="Enterprise" scheduling="fcfs">
+         <result-task throughput="0.267106" utilization="0.327735" phase1-utilization="0.327735" proc-utilization="0.267106"/>
+         <entry name="getEnterprise_bes0" type="PH1PH2">
+            <result-entry utilization="0.163867" throughput="0.133553" squared-coeff-variation="0.698458" proc-utilization="0.133553" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="get_enterprise_message" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.226976" service-time="1.22698" utilization="0.163867" service-time-variance="1.05152"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="getEnterprise_bes1" type="PH1PH2">
+            <result-entry utilization="0.163867" throughput="0.133553" squared-coeff-variation="0.698458" proc-utilization="0.133553" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="getmttd_message" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.226976" service-time="1.22698" utilization="0.163867" service-time-variance="1.05152"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+      <task name="DataStore" scheduling="fcfs">
+         <result-task throughput="0.226869" utilization="0.226915" phase1-utilization="0.226915" proc-utilization="0.226869"/>
+         <entry name="dataStoreBes1" type="PH1PH2">
+            <result-entry utilization="0.113457" throughput="0.113434" squared-coeff-variation="0.999597" proc-utilization="0.113434" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="queryStockItem" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1.0002" utilization="0.113457" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="dataStoreBes0" type="PH1PH2">
+            <result-entry utilization="0.113457" throughput="0.113434" squared-coeff-variation="0.999597" proc-utilization="0.113434" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="queryOrderByIdMessage" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1.0002" utilization="0.113457" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+   <processor name="CashDeskPC" scheduling="fcfs">
+      <result-processor utilization="0.139992"/>
+      <task name="CashDeskApplication" scheduling="fcfs">
+         <result-task throughput="0.139992" utilization="0.288714" phase1-utilization="0.288714" proc-utilization="0.139992"/>
+         <entry name="cashDeskBes1" type="PH1PH2">
+            <result-entry utilization="0.196501" throughput="0.0477788" squared-coeff-variation="0.780536" proc-utilization="0.0477788" throughput-bound="0.25"/>
+            <entry-phase-activities>
+               <activity name="printRunningTotalDesk" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="4.11273" utilization="0.196501" service-time-variance="13.2024"/>
+                  <synch-call dest="inventoryBes0" calls-mean="1">
+                     <result-call waiting="0"/>
+                  </synch-call>
+                  <synch-call dest="printerBes1" calls-mean="1">
+                     <result-call waiting="0.0442701"/>
+                  </synch-call>
+                  <synch-call dest="guiBes1" calls-mean="1">
+                     <result-call waiting="0.0442701"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="cashDeskBesStart" type="PH1PH2">
+            <result-entry utilization="0.0461065" throughput="0.0461065" squared-coeff-variation="1" proc-utilization="0.0461065" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="saleStartedApplication" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1" utilization="0.0461065" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="stopSaleBes" type="PH1PH2">
+            <result-entry utilization="0.0461065" throughput="0.0461065" squared-coeff-variation="1" proc-utilization="0.0461065" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="stopSale" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1" utilization="0.0461065" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+   <processor name="Printer" scheduling="fcfs">
+      <result-processor utilization="0.0938166"/>
+      <task name="PrinterController" scheduling="fcfs">
+         <result-task throughput="0.0938166" utilization="0.0938166" phase1-utilization="0.0938166" proc-utilization="0.0938166"/>
+         <entry name="printerDeskBesStart" type="PH1PH2">
+            <result-entry utilization="0.0461053" throughput="0.0461053" squared-coeff-variation="1" proc-utilization="0.0461053" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="saleStartedEventPrinter" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1" utilization="0.0461053" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="printerBes1" type="PH1PH2">
+            <result-entry utilization="0.0477113" throughput="0.0477113" squared-coeff-variation="1" proc-utilization="0.0477113" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="printRunningTotalPrinter" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1" utilization="0.0477113" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+   <processor name="LightDisplay" scheduling="fcfs">
+      <result-processor utilization="0.0938166"/>
+      <task name="CashDeskGUI" scheduling="fcfs">
+         <result-task throughput="0.0938166" utilization="0.0938166" phase1-utilization="0.0938166" proc-utilization="0.0938166"/>
+         <entry name="guiBes0" type="PH1PH2">
+            <result-entry utilization="0.0461053" throughput="0.0461053" squared-coeff-variation="1" proc-utilization="0.0461053" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="startStartEventCashDesk" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1" utilization="0.0461053" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="guiBes1" type="PH1PH2">
+            <result-entry utilization="0.0477113" throughput="0.0477113" squared-coeff-variation="1" proc-utilization="0.0477113" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="printRunningTotalDesk" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1" utilization="0.0477113" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+   <processor name="CashBox_aqoqlzcnam" scheduling="fcfs" multiplicity="2">
+      <result-processor utilization="0.184473"/>
+      <task name="CashBoxController" scheduling="fcfs">
+         <result-task throughput="0.0461539" utilization="0.223837" phase1-utilization="0.223837" proc-utilization="0.0461539"/>
+         <entry name="cashBoxBes0" type="PH1PH2">
+            <result-entry utilization="0.223837" throughput="0.0461539" squared-coeff-variation="0.792277" proc-utilization="0.0461539" throughput-bound="0.25"/>
+            <entry-phase-activities>
+               <activity name="startStartEventCashDesk" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.000330004" service-time="4.84979" utilization="0.223837" service-time-variance="18.6347"/>
+                  <synch-call dest="cashDeskBesStart" calls-mean="1">
+                     <result-call waiting="0.760411"/>
+                  </synch-call>
+                  <synch-call dest="printerDeskBesStart" calls-mean="1">
+                     <result-call waiting="0.0458826"/>
+                  </synch-call>
+                  <synch-call dest="guiBes0" calls-mean="1">
+                     <result-call waiting="0.0458826"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+      <task name="Cashier" scheduling="ref">
+         <result-task throughput="0.138319" utilization="0.999889" phase1-utilization="0.999889" proc-utilization="0.138319"/>
+         <entry name="cashierBes0" type="PH1PH2">
+            <result-entry utilization="0.268588" throughput="0.0461065" squared-coeff-variation="2.23524" proc-utilization="0.0461065" throughput-bound="0.2"/>
+            <entry-phase-activities>
+               <activity name="startSale" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="5.82539" utilization="0.268588" service-time-variance="75.8531"/>
+                  <synch-call dest="cashBoxBes0" calls-mean="1">
+                     <result-call waiting="0"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="CashierBes2" type="PH1PH2">
+            <result-entry utilization="0.127162" throughput="0.0461065" squared-coeff-variation="1.61666" proc-utilization="0.0461065" throughput-bound="0.5"/>
+            <entry-phase-activities>
+               <activity name="stopSale" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="2.758" utilization="0.127162" service-time-variance="12.2972"/>
+                  <synch-call dest="stopSaleBes" calls-mean="1">
+                     <result-call waiting="0.760413"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="cashierBes1" type="PH1PH2">
+            <result-entry utilization="0.604139" throughput="0.0461065" squared-coeff-variation="2.46539" proc-utilization="0.0461065" throughput-bound="0.166667"/>
+            <entry-phase-activities>
+               <activity name="scanProduct" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="13.1031" utilization="0.604139" service-time-variance="423.288"/>
+                  <synch-call dest="scannerBes0" calls-mean="1">
+                     <result-call waiting="6.83981"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+   <processor name="New-Node_lpojevoqbh" scheduling="fcfs" multiplicity="2">
+      <result-processor utilization="0.246988"/>
+      <task name="Persistence" scheduling="fcfs">
+         <result-task throughput="0.246988" utilization="0.246988" phase1-utilization="0.246988" proc-utilization="0.246988"/>
+         <entry name="persistenceBes" type="PH1PH2">
+            <result-entry utilization="0.113434" throughput="0.113434" squared-coeff-variation="1" proc-utilization="0.113434" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="getTransactionContextMessage" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1" utilization="0.113434" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+         <entry name="PersistenceBesSSR" type="PH1PH2">
+            <result-entry utilization="0.133553" throughput="0.133553" squared-coeff-variation="1" proc-utilization="0.133553" throughput-bound="1"/>
+            <entry-phase-activities>
+               <activity name="get_transaction_report" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0" service-time="1" utilization="0.133553" service-time-variance="1"/>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+   <processor name="EnterpriseClient_oxjwivbzft" scheduling="fcfs" multiplicity="2">
+      <result-processor utilization="0.259082"/>
+      <task name="GUIReporting" scheduling="fcfs">
+         <result-task throughput="0.130267" utilization="0.847525" phase1-utilization="0.847525" proc-utilization="0.130267"/>
+         <entry name="guiReportingBES" type="PH1PH2">
+            <result-entry utilization="0.847525" throughput="0.130267" squared-coeff-variation="2.18397" proc-utilization="0.130267" throughput-bound="0.2"/>
+            <entry-phase-activities>
+               <activity name="getmttreport_message" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.000121292" service-time="6.50608" utilization="0.847525" service-time-variance="92.4455"/>
+                  <synch-call dest="appReportingBes" calls-mean="1">
+                     <result-call waiting="0.00953167"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+      <task name="EnterpriseManager" scheduling="ref">
+         <result-task throughput="0.128815" utilization="1" phase1-utilization="1" proc-utilization="0.128815"/>
+         <entry name="enterpriseManagerBES" type="PH1PH2">
+            <result-entry utilization="1" throughput="0.128815" squared-coeff-variation="3.289" proc-utilization="0.128815" throughput-bound="0.166667"/>
+            <entry-phase-activities>
+               <activity name="create_rep_message" phase="1" host-demand-mean="1">
+                  <result-activity proc-waiting="0.000135223" service-time="7.76307" utilization="1" service-time-variance="198.213"/>
+                  <synch-call dest="guiReportingBES" calls-mean="1">
+                     <result-call waiting="0.170356"/>
+                  </synch-call>
+               </activity>
+            </entry-phase-activities>
+         </entry>
+      </task>
+   </processor>
+</lqn-model>
