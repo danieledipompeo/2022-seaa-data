@@ -64,4 +64,5 @@ def plot_pareto(experiments, hue, initial=None, save_prefix=None,
 
     filename = '{}_2dscatter.pdf'.format(save_prefix)
     plt.savefig(filename)
-    print('Saved to: {}'.format(filename))
+    #print('Saved to: {}'.format(filename))
+    return filename

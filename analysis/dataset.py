@@ -41,5 +41,6 @@ def get_datasets(data_dir):
         if m is not None:
             d = m.groupdict()
             datasets.append(Dataset(p, d['usecase'], d['algo'],
-                d['eval'].split('_')[0], int(int(d['time'])/1000), d['prob']))
+                d['eval'].split('_')[0],
+                '{} min'.format(int(int(d['time'])/1000/60)), d['prob']))
     return [d for d in datasets if d.reference is not None]
