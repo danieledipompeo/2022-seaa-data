@@ -6,6 +6,7 @@ import numpy as np
 import sys
 from statistics import mean, stdev
 from math import floor
+from latex import HV_table
 
 DATA_DIR = '../data/by_time'
 SB_DIR = DATA_DIR + '/search_budget_stats'
@@ -151,6 +152,5 @@ for cs in case_studies.values():
             data.append([cs, algo, time, len(qi_values), mean(iterations),
                 stdev(iterations), mean(qi_values), stdev(qi_values)])
     df = pd.DataFrame(data, columns=cols)
-    print(df.to_markdown(index=False))
-    print()
+    HV_table(df)
     timeline_aggregated(df, save_prefix='{}{}_{}'.format(FIGS, cs, qi))

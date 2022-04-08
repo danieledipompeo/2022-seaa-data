@@ -10,7 +10,6 @@ def figure(path, caption, label):
 '''
     return template.format(path, caption, label)
 
-# \newcommand{\vda}{$\hat{A}_{12}$\xspace}
 def tests_table(df):
     def mwu(x):
         if x >= 0.0001:
@@ -26,4 +25,15 @@ def tests_table(df):
     df.columns = df.columns.str.replace('time', 'Budget')
     df.columns = df.columns.str.replace('algo', 'Algor.')
     df.rename(columns={'vda': '\\vda'}, inplace=True)
+    print(df.to_latex(escape=False, index=False))
+
+def HV_table(df):
+    df = df.sort_values(by=['algo', 'time'])
+    df = df[df['time'] != 0]
+    df['time'] = df['time'].apply(lambda x: '{} min'.format(int(x / 1000 / 60)))
+    df['algo'] = df['algo'].apply(lambda x: '\\' + x.lower()[:4])
+    df['qi avg'] = df['qi avg'].apply(lambda x: round(x, 4))
+    df['qi stdev'] = df['qi stdev'].apply(lambda x: round(x, 4))
+    df = df[['algo', 'time', 'qi avg', 'qi stdev']]
+    print(df.to_markdown())
     print(df.to_latex(escape=False, index=False))
